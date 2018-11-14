@@ -2,7 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="styles.css"/>
-        <script src = "assignment2.js"></script>
+
         <meta http-equiv="content-type" content="text/typescript; charset=utf-8" />
 
         <title>Car Rentals</title>
@@ -11,14 +11,40 @@
     <body>
         <div class="Container">
             <div class="Header">
-                <h1>Car Data</h1>
+                <h2>Car Data</h2>
             </div>
 
             <div class="Body">
+                <h3>Add Vehicle</h3>
                 <form>
+                    Registration Number: <br>
+                    <input id="registration" type = "text" required/><br>
+                    Make: <br>
+                    <input id = "make" type = "text" required/><br>
+                    Model: <br>
+                    <input id = "model" type = "text" required/><br><br>
+                    Transmission: <br>
+                    <select name = "transmission" id = "transmission" size = "2" required>
+                        <option value = "Manual">Manual</option>
+                        <option value = "Automatic">Automatic</option>
+                    </select><br><br>
+                    Body Shape: <br>
+                    <select name = "bodyShape" id = "bodyShape" size = "5" required>
+                        <option value = "Hatch">Hatch</option>
+                        <option value = "Sedan">Sedan</option>
+                        <option value = "SUV">SUV</option>
+                        <option value = "Van">Van</option>
+                        <option value = "Ute">Ute</option>  
+                    </select><br><br>
+                    Year: <br>
+                    <input id = "year" type = "number"/><br><br>
+                    <button type = "button" onClick = "newVehicle()">Add Vehicle</button> &nbsp;
+                    <button type = "button" onClick = "editVehicle()">Edit Vehicle</button>
+                </form>
+                <div id = "message"></div>
             </div>
         </div>
-
+        <script src = "assignment2.js"></script>
     </body>
 
     <footer>
@@ -26,4 +52,5 @@
         
         </div>
     </footer>
+
 </html>

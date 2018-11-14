@@ -83,6 +83,74 @@ vehicles = [
 
 initializeVehicles();
 
-for (let vehicle of vehicles){
-    console.log(vehicle.getRegistration());
+function newVehicle() : void {
+    let registration = (<HTMLInputElement>document.getElementById("registration")).value;
+    let make = (<HTMLInputElement>document.getElementById("make")).value;
+    let model = (<HTMLInputElement>document.getElementById("model")).value;
+    let transmission = (<HTMLSelectElement>document.getElementById("transmission")).value;
+    let bodyShape = (<HTMLSelectElement>document.getElementById("bodyShape")).value;
+    let year =  Number((<HTMLInputElement>document.getElementById("year")).value);
+
+    if (validate(registration, make, model, transmission, bodyShape, year) ==  true) {
+        vehicles.push((new Vehicle(registration, make, model, transmission, bodyShape, year)));
+    }
+
+    let message : string = "New Vehicle Added:<br> " + registration + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
+    let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+    updateMessage.innerHTML = message;
+
+    for(let vehicle of vehicles){
+        console.log(vehicle);
+    }
+}
+
+function validate(registration:  string, make:  string, model: string, transmission:  string, bodyShape: string , year?: number) : boolean {
+    let validates : boolean =  true;
+    this.registration = registration;
+    this.make = make;
+    this.model = model;
+    this.year =  year;
+    this.transmission=  transmission;
+    this.bodyShape = bodyShape;
+
+    for (let vehicle of vehicles) {
+        if (vehicle.getRegistration().toUpperCase() == this.registration.toUpperCase()){
+            validates =  false;
+        }
+    }
+    if ((this.make = "") || (this.model = "") ||  (this.transmission = "") || (this.bodyShape ="") ) {
+        validates =  false
+    } 
+    return validates;
+}
+
+function editVehicle() :  void {
+    let message : string = "";
+    let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+    updateMessage.innerHTML = message;
+
+    let registration = (<HTMLInputElement>document.getElementById("registration")).value;
+    let make = (<HTMLInputElement>document.getElementById("make")).value;
+    let model = (<HTMLInputElement>document.getElementById("model")).value;
+    let transmission = (<HTMLSelectElement>document.getElementById("transmission")).value;
+    let bodyShape = (<HTMLSelectElement>document.getElementById("bodyShape")).value;
+    let year =  Number((<HTMLInputElement>document.getElementById("year")).value);
+
+    for (let vehicle of vehicles) {
+        if(vehicle.getRegistration() == registration.toUpperCase()){
+            vehicle.setMake(make);
+            vehicle.setModel(model);
+            vehicle.setTransmission(transmission);
+            vehicle.setBodyShape(bodyShape);
+            vehicle.setYear(year);
+            let message : string = "Vehicle Updated:<br> " + registration.toUpperCase() + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
+            let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+            updateMessage.innerHTML = message;
+        
+            for(let vehicle of vehicles){
+                console.log(vehicle);
+            }
+        } 
+    }
+
 }
