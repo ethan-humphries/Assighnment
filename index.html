@@ -39,9 +39,17 @@
                     Year: <br>
                     <input id = "year" type = "number"/><br><br>
                     <button type = "button" onClick = "newVehicle()">Add Vehicle</button> &nbsp;
-                    <button type = "button" onClick = "editVehicle()">Edit Vehicle</button>
+                    <button type = "button" onClick = "editVehicle()">Edit Vehicle</button> &nbsp;
+                    <button type = "button" onClick = "deleteVehicle()">Delete Vehicle</button><br>
                 </form>
                 <div id = "message"></div>
+                <br>
+                <form>
+                    Find Vehicle: <br>
+                    <input id = "findPlate" type = "text"/><br><br>
+                    <button type = "button" onClick = "findVehicle()">Search</button><br><br>
+                    <div id = "searchResult"></div>
+                </form>
             </div>
         </div>
         <script src = "assignment2.js"></script>

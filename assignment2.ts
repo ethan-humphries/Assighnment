@@ -1,3 +1,4 @@
+//create a class of vehicles to be instantiated as vehicle objects
 class Vehicle {
     registration : string;
     make :  string;
@@ -65,6 +66,7 @@ class Vehicle {
 
 }
 
+// create vehicles array and populate the array
 let vehicles: Array<Vehicle>
 function initializeVehicles() : void {
 vehicles = [
@@ -81,8 +83,10 @@ vehicles = [
 ]  
 }
 
+//cinitialize the vehicles array on TS document load
 initializeVehicles();
 
+//create a new vehicle if plate number does not already exist
 function newVehicle() : void {
     let registration = (<HTMLInputElement>document.getElementById("registration")).value;
     let make = (<HTMLInputElement>document.getElementById("make")).value;
@@ -92,20 +96,20 @@ function newVehicle() : void {
     let year =  Number((<HTMLInputElement>document.getElementById("year")).value);
 
     if (validate(registration, make, model, transmission, bodyShape, year) ==  true) {
-        vehicles.push((new Vehicle(registration, make, model, transmission, bodyShape, year)));
-    }
-
-    let message : string = "New Vehicle Added:<br> " + registration + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
-    let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
-    updateMessage.innerHTML = message;
-
-    for(let vehicle of vehicles){
-        console.log(vehicle);
+        vehicles.push((new Vehicle(registration.toUpperCase(), make, model, transmission, bodyShape, year)));
+        let message : string = "New Vehicle Added:<br> " + registration + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
+        let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+        updateMessage.innerHTML = message;
+    } else {
+        let message : string = "Registration Number must be unique, all fields must be entered except year";
+        let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+        updateMessage.innerHTML = message;
     }
 }
 
+//validate the data entered
 function validate(registration:  string, make:  string, model: string, transmission:  string, bodyShape: string , year?: number) : boolean {
-    let validates : boolean =  true;
+    let validates : boolean =  false;
     this.registration = registration;
     this.make = make;
     this.model = model;
@@ -114,16 +118,18 @@ function validate(registration:  string, make:  string, model: string, transmiss
     this.bodyShape = bodyShape;
 
     for (let vehicle of vehicles) {
-        if (vehicle.getRegistration().toUpperCase() == this.registration.toUpperCase()){
+        if (vehicle.getRegistration().toUpperCase() === this.registration.toUpperCase()){
             validates =  false;
-        }
-    }
-    if ((this.make = "") || (this.model = "") ||  (this.transmission = "") || (this.bodyShape ="") ) {
+        } else if ((this.make == "") || (this.model == "") ||  (this.transmission == "") || (this.bodyShape == "")) {
         validates =  false
+        } else {
+            validates =  true;
+        }
     } 
     return validates;
 }
 
+// if the vehicle is found, edit the details of the vehicle
 function editVehicle() :  void {
     let message : string = "";
     let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
@@ -135,9 +141,16 @@ function editVehicle() :  void {
     let transmission = (<HTMLSelectElement>document.getElementById("transmission")).value;
     let bodyShape = (<HTMLSelectElement>document.getElementById("bodyShape")).value;
     let year =  Number((<HTMLInputElement>document.getElementById("year")).value);
+    
+    if ((this.make == "") || (this.model == "") ||  (this.transmission == "") || (this.bodyShape == "")) {
+        let message : string = "All fields must be entered except year";
+        let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+        updateMessage.innerHTML = message;
+        return;
+        }
 
     for (let vehicle of vehicles) {
-        if(vehicle.getRegistration() == registration.toUpperCase()){
+        if(vehicle.getRegistration() === registration.toUpperCase()){
             vehicle.setMake(make);
             vehicle.setModel(model);
             vehicle.setTransmission(transmission);
@@ -146,11 +159,40 @@ function editVehicle() :  void {
             let message : string = "Vehicle Updated:<br> " + registration.toUpperCase() + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
             let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
-        
-            for(let vehicle of vehicles){
-                console.log(vehicle);
-            }
-        } 
+        } else {
+            let message : string = "Vehicle Registration Not found";
+            let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+            updateMessage.innerHTML = message;
+        }
     }
+}
 
+//delete vehicle based on plate number entered
+function deleteVehicle() :  void {
+    let registration = (<HTMLInputElement>document.getElementById("registration")).value;  
+    if(window.confirm("Are you sure you want to delete vehicle: " + registration + "?") == true) {
+        console.log("Delete the vehicle"); 
+    }
+}
+
+// find vehicle and display vehicle details to user
+function findVehicle() : void {
+    let registration = (<HTMLInputElement>document.getElementById("findPlate")).value;
+    if (registration == "") {
+        let message : string = "Registration number must be entered";
+        let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("searchResult");
+        updateMessage.innerHTML = message;
+    } else if(registration != "") {
+        for(let vehicle of vehicles){
+            if(vehicle.getRegistration() === registration.toUpperCase()) {
+                let message : string = "Vehicle Details:<br> " + registration.toUpperCase() + ", " + vehicle.make + " " + vehicle.model +", " + vehicle.transmission +", "+ vehicle.bodyShape;
+                let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("searchResult");
+                updateMessage.innerHTML = message;
+            }
+        }
+    } else {
+        let message : string = "Registration not found";
+        let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("searchResult");
+        updateMessage.innerHTML = message; 
+    }
 }
