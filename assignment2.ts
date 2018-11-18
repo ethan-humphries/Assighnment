@@ -7,6 +7,7 @@ class Vehicle {
     transmission :  string;
     bodyShape : string;
 
+    //constructor for vehicle, year? optional
     constructor(registration:  string, make:  string, model: string, transmission:  string, bodyShape: string , year?: number) {
         this.registration = registration;
         this.make = make;
@@ -16,6 +17,7 @@ class Vehicle {
         this.bodyShape = bodyShape;
     }
 
+    //mutator methods
     getRegistration() : string {
         return this.registration;
     }
@@ -83,7 +85,7 @@ vehicles = [
 ]  
 }
 
-//cinitialize the vehicles array on TS document load
+//Initialize the vehicles array on TS document load
 initializeVehicles();
 
 //create a new vehicle if plate number does not already exist
@@ -153,9 +155,20 @@ function editVehicle() :  void {
 
 //delete vehicle based on plate number entered
 function deleteVehicle() :  void {
-    let registration = (<HTMLInputElement>document.getElementById("registration")).value;  
+    let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
+    updateMessage.innerHTML = "";
+    let registration: string = (<HTMLInputElement>document.getElementById("registration")).value;  
     if(window.confirm("Are you sure you want to delete vehicle: " + registration + "?") == true) {
-        console.log("Delete the vehicle"); 
+        for(let i : number = 0; i < vehicles.length - 1; i++) {
+            if (vehicles[i].getRegistration().toUpperCase() === registration.toUpperCase()){
+                vehicles.splice(i, 1);
+                let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
+                updateMessage.innerHTML = "Vehicle Deleted: " + registration.toUpperCase();
+            } 
+        }
+        for (let vehicle of vehicles){
+            console.log(vehicle);
+        }
     }
 }
 
