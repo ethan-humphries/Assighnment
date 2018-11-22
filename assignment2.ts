@@ -96,17 +96,17 @@ function newVehicle() : void {
     let transmission = (<HTMLSelectElement>document.getElementById("transmission")).value;
     let bodyShape = (<HTMLSelectElement>document.getElementById("bodyShape")).value;
     let year =  Number((<HTMLInputElement>document.getElementById("year")).value);
+    let validates : boolean =  true;
 
     for (let vehicle of vehicles) {
-        if (vehicle.getRegistration().toUpperCase() == registration.toUpperCase()){
-            let message : string = "Registration Number must be unique";
-            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
-            updateMessage.innerHTML = message;
+        if (vehicle.getRegistration().toUpperCase() === registration.toUpperCase()){
+            validates =  false;
+            break;
         }    
     }  
 
-    if (make == "" || model == "" ||  transmission == "" || bodyShape == "") {
-        let message : string = "All fields must be entered except year";
+    if (make == "" || model == "" ||  transmission == "" || bodyShape == "" || validates ==  false) {
+        let message : string = "Registration Number must be unique, all fields must be entered except year";
         let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
         updateMessage.innerHTML = message;
     } else {
