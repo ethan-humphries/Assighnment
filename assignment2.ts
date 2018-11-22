@@ -98,21 +98,23 @@ function newVehicle() : void {
     let year =  Number((<HTMLInputElement>document.getElementById("year")).value);
 
     for (let vehicle of vehicles) {
-        if (vehicle.getRegistration().toUpperCase() === registration.toUpperCase()){
+        if (vehicle.getRegistration().toUpperCase() == registration.toUpperCase()){
             let message : string = "Registration Number must be unique";
             let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
-        } else if (make == "" || model == "" ||  transmission == "" || bodyShape == "") {
-            let message : string = "All fields must be entered except year";
-            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
-            updateMessage.innerHTML = message;
-        } else {
-            vehicles.push((new Vehicle(registration.toUpperCase(), make, model, transmission, bodyShape, year)));
-            let message : string = "New Vehicle Added:<br> " + registration + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
-            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
-            updateMessage.innerHTML = message;
-        }
+        }    
     }  
+
+    if (make == "" || model == "" ||  transmission == "" || bodyShape == "") {
+        let message : string = "All fields must be entered except year";
+        let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
+        updateMessage.innerHTML = message;
+    } else {
+    vehicles.push((new Vehicle(registration.toUpperCase(), make, model, transmission, bodyShape, year)));
+    let message : string = "New Vehicle Added:<br> " + registration + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
+    let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
+    updateMessage.innerHTML = message;
+    }
 }
 
 // if the vehicle is found, edit the details of the vehicle
@@ -145,10 +147,12 @@ function editVehicle() :  void {
             let message : string = "Vehicle Updated:<br> " + registration.toUpperCase() + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
             let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
+            break;
         } else {
             let message : string = "Vehicle Registration Not found";
             let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
+            break;
         }
     }
 }
