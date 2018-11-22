@@ -100,16 +100,16 @@ function newVehicle() : void {
     for (let vehicle of vehicles) {
         if (vehicle.getRegistration().toUpperCase() === registration.toUpperCase()){
             let message : string = "Registration Number must be unique";
-            let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
         } else if (make == "" || model == "" ||  transmission == "" || bodyShape == "") {
             let message : string = "All fields must be entered except year";
-            let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
         } else {
             vehicles.push((new Vehicle(registration.toUpperCase(), make, model, transmission, bodyShape, year)));
             let message : string = "New Vehicle Added:<br> " + registration + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
-            let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
         }
     }  
@@ -118,7 +118,7 @@ function newVehicle() : void {
 // if the vehicle is found, edit the details of the vehicle
 function editVehicle() :  void {
     let message : string = "";
-    let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+    let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
     updateMessage.innerHTML = message;
 
     let registration = (<HTMLInputElement>document.getElementById("registration")).value;
@@ -130,7 +130,7 @@ function editVehicle() :  void {
     
     if ((this.make == "") || (this.model == "") ||  (this.transmission == "") || (this.bodyShape == "")) {
         let message : string = "All fields must be entered except year";
-        let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+        let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
         updateMessage.innerHTML = message;
         return;
         }
@@ -143,11 +143,11 @@ function editVehicle() :  void {
             vehicle.setBodyShape(bodyShape);
             vehicle.setYear(year);
             let message : string = "Vehicle Updated:<br> " + registration.toUpperCase() + ", " + make + " " + model +", " + transmission +", "+ bodyShape;
-            let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
         } else {
             let message : string = "Vehicle Registration Not found";
-            let updateMessage: HTMLElement = <HTMLInputElement>document.getElementById("message");
+            let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
             updateMessage.innerHTML = message;
         }
     }
@@ -157,7 +157,7 @@ function editVehicle() :  void {
 function deleteVehicle() :  void {
     let updateMessage: HTMLElement = <HTMLOutputElement>document.getElementById("message");
     updateMessage.innerHTML = "";
-    let registration: string = (<HTMLInputElement>document.getElementById("registration")).value;  
+    let registration: string = (<HTMLOutputElement>document.getElementById("registration")).value;  
     if(window.confirm("Are you sure you want to delete vehicle: " + registration + "?") == true) {
         for(let i : number = 0; i < vehicles.length - 1; i++) {
             if (vehicles[i].getRegistration().toUpperCase() === registration.toUpperCase()){
